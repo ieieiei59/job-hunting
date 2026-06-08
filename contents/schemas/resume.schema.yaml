@@ -24,18 +24,45 @@ properties:
       full_name:
         type: string
         minLength: 1
+      furigana:
+        type: string
+      gender:
+        type: string
+      postal_code:
+        type: string
+        pattern: '^\d{3}-\d{4}$'
       birth_date:
         type: string
         pattern: '^\d{4}-\d{2}-\d{2}$'
       address:
         type: string
         minLength: 1
+      contact_address:
+        type: string
       phone:
         type: string
         minLength: 1
       email:
         type: string
         format: email
+    additionalProperties: false
+  motivation:
+    type: string
+  jis:
+    type: object
+    properties:
+      commute_time:
+        type: string
+      dependents:
+        type: integer
+        minimum: 0
+      spouse:
+        type: string
+        enum: [有, 無]
+      spouse_support_obligation:
+        type: string
+        enum: [有, 無]
+    additionalProperties: false
   photo:
     type: string
   links:

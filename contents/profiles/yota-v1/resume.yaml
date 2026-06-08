@@ -1,10 +1,20 @@
 schema_version: 1
 personal:
   full_name: "宮田 洋太"
+  furigana: "みやた ようた"
   birth_date: "1997-05-09"
+  gender: "男"
+  postal_code: "482-0042"
   address: "愛知県 岩倉市 中本町 古市場 48-2 グランドテラスA"
+  contact_address: "同上"
   phone: "090-4408-7790"
   email: "yota0509a@gmail.com"
+motivation: "プロダクト品質と開発生産性を両立できる開発組織づくりに貢献したく、Web バックエンド領域を中心に志望します。"
+jis:
+  commute_time: ""
+  dependents: 1
+  spouse: "有"
+  spouse_support_obligation: "有"
 links:
   - label: "GitHub"
     url: "https://github.com/ieieiei59"

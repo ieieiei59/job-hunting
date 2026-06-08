@@ -73,6 +73,15 @@
 推奨項目:
 - `photo`: 証明写真パス
 - `links`: ポートフォリオやGitHub等
+- `motivation`: 志望動機・アピールポイント
+- `personal.furigana`: ふりがな
+- `personal.gender`: 性別
+- `personal.postal_code`: 郵便番号（`NNN-NNNN`）
+- `personal.contact_address`: 連絡先（現住所以外）
+- `jis.commute_time`: 通勤時間
+- `jis.dependents`: 扶養家族数（配偶者を除く）
+- `jis.spouse`: 配偶者有無（`有` / `無`）
+- `jis.spouse_support_obligation`: 配偶者の扶養義務（`有` / `無`）
 
 ### 4.2 職務経歴書 YAML（work-history.yaml）
 必須トップレベル項目:
