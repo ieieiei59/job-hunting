@@ -1,0 +1,86 @@
+# 名前等
+name_kana: みやた ようた
+name: 宮田 洋太
+birth_day: 平成9年5月9日
+gender: 男
+cell_phone: 090-4408-7790
+email: yota0509a@gmail.com
+# 写真をアップロードした場合、このフィールドが無視されます
+photo: face.png
+
+# 住所
+address_kana: あいちけん きたなごやし なかのごうみなみ 147-3
+address: 愛知県 北名古屋市 中之郷南 147-3
+address_zip: 481-0045
+tel: 090-4408-7790
+address2: 同上
+
+# 学歴
+education:
+  - 
+    year: 2013
+    month: 4
+    value: 名城大学附属高等学校 普通科 特別進学コース　入学
+  - 
+    year: 2016
+    month: 3
+    value: 同　卒業
+  - 
+    year: 2016
+    month: 4
+    value: 中京大学 工学部 情報工学科　入学
+  - 
+    year: 2020
+    month: 3
+    value: 同　中退
+
+#職歴
+experience:
+  - 
+    year: 2020
+    month: 4
+    value: 株式会社アットイン　入社
+  - 
+    value: 現在にいたる
+
+# 免許・資格
+licences:
+  - 
+    year: 2021
+    month: 2
+    value: 普通二輪免許
+  - 
+    year: 2022
+    month: 3
+    value: 普通自動車免許
+  - 
+    year: 2021
+    month: 12
+    value: 基本情報技術者試験 合格
+    
+
+#通勤時間
+commuting_time:  0時間
+
+#扶養家族数(配偶者を除く)
+dependents: 0人
+
+#配偶者の有無
+spouse: なし
+
+#配偶者の扶養義務
+supporting_spouse: なし
+
+#趣味
+hobby: |
+  バイク、ルービックキューブ、プログラミング、ゲーム
+
+#志望動機
+motivation: |
+  貴社の提供サービスである「Flipdesk」の開発にぜひ携わらせていただきたいと思います。
+  エンジニアチームの開発体制なども、私の希望とするものに合致しており非常に魅力を感じております。
+  是非ご一緒に働かせていただければと思います。
+
+# 本人希望記入欄
+request: |
+  貴社の規定に従います。

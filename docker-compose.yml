@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  yaml_2_resume:
+    image: jerrywdlee/yaml_2_resume
+    ports:
+      - 14567:4567
+    working_dir: /usr/src/app
+    volumes:
+      - ./resume:/usr/src/app/share
+    # web app mode
+    command: ruby app.rb -o 0.0.0.0
+    # cmd mode
+    # command: ruby make_cv.rb -i share/data.yaml -s share/style.txt -o share/output.pdf
