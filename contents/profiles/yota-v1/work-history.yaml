@@ -1,0 +1,34 @@
+schema_version: 1
+profile_summary: "Backend engineer with 10+ years of experience in web systems and cloud infrastructure."
+skills:
+  Languages:
+    - Python
+    - Go
+    - TypeScript
+  Cloud:
+    - AWS
+    - GCP
+  Databases:
+    - PostgreSQL
+    - MySQL
+experiences:
+  - period:
+      from: "2020-10"
+      to: "present"
+    company: "Next Career Tech Co."
+    role: "Senior Backend Engineer"
+    projects:
+      - name: "Recruitment Platform Modernization"
+        domain: "HR Tech"
+        team_size: 8
+        responsibilities:
+          - "Designed and implemented microservice APIs"
+          - "Led migration from monolith to service architecture"
+        tech_stack:
+          - "Python"
+          - "FastAPI"
+          - "PostgreSQL"
+          - "AWS"
+        achievements:
+          - "Reduced average API latency by 35%"
+          - "Improved deployment frequency from weekly to daily"

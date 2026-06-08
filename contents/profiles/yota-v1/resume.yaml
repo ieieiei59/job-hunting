@@ -1,0 +1,36 @@
+schema_version: 1
+personal:
+  full_name: "宮田 洋太"
+  birth_date: "1997-05-09"
+  address: "愛知県 岩倉市 中本町 古市場 48-2 グランドテラスA"
+  phone: "090-4408-7790"
+  email: "yota0509a@gmail.com"
+links:
+  - label: "GitHub"
+    url: "https://github.com/ieieiei59"
+education:
+  - date: 2013-04
+    description: 名城大学附属高等学校 普通科 特別進学コース 入学
+  - date: 2016-03
+    description: 同 卒業
+  - date: 2016-04
+    description: 中京大学 工学部 情報工学科 入学
+  - date: 2020-03
+    description: 同 中退
+employment_summary:
+  - date: 2020-04
+    description: 株式会社アットイン 入社
+  - date: 2022-12
+    description: 同 一身上の都合により退職
+  - date: 2023-01
+    description: 株式会社カケハシ 入社
+  - date: 2026-06
+    description: 現在にいたる
+licenses:
+  - date: 2021-02
+    name: 普通二輪免許
+  - date: 2022-03
+    name: 普通自動車免許
+  - date: 2021-12
+    name: 基本情報技術者試験 合格
+preferences: "Open to backend and platform engineering roles in Tokyo."
