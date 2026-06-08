@@ -29,6 +29,7 @@ type ResumeData = {
     spouse?: "有" | "無";
     spouse_support_obligation?: "有" | "無";
   };
+  photo?: string;
   links?: Array<{ label: string; url: string }>;
   education: Array<{ date: string; description: string }>;
   employment_summary: Array<{ date: string; description: string }>;
@@ -130,9 +131,33 @@ function toWareki(date: Date): string {
   return `昭和${y - 1925}年`;
 }
 
+function parseFlexibleDate(value: string): Date | null {
+  const iso = /^\d{4}-\d{2}-\d{2}$/;
+  if (iso.test(value)) {
+    const d = new Date(value);
+    return Number.isNaN(d.getTime()) ? null : d;
+  }
+
+  const wareki = /^(令和|平成|昭和)(\d+)年(\d{1,2})月(\d{1,2})日$/;
+  const matched = value.match(wareki);
+  if (!matched) {
+    return null;
+  }
+
+  const era = matched[1];
+  const eraYear = Number(matched[2]);
+  const month = Number(matched[3]);
+  const day = Number(matched[4]);
+
+  const baseYear = era === "令和" ? 2018 : era === "平成" ? 1988 : 1925;
+  const year = baseYear + eraYear;
+  const d = new Date(year, month - 1, day);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
 function calcAge(birthDate: string, today: Date): number | null {
-  const birth = new Date(birthDate);
-  if (Number.isNaN(birth.getTime())) {
+  const birth = parseFlexibleDate(birthDate);
+  if (!birth) {
     return null;
   }
 
@@ -145,7 +170,48 @@ function calcAge(birthDate: string, today: Date): number | null {
   return age;
 }
 
-function renderResumeHtml(data: ResumeData, css: string): string {
+function resolvePhotoDataUri(profileDir: string, photoPath: string | undefined): string | null {
+  if (!photoPath) {
+    return null;
+  }
+
+  const raw = photoPath.trim();
+  if (!raw) {
+    return null;
+  }
+
+  const candidates = path.isAbsolute(raw)
+    ? [raw]
+    : [
+        path.resolve(profileDir, raw),
+        path.resolve(ROOT_DIR, raw),
+        path.resolve(CONTENTS_DIR, raw),
+        path.resolve(CONTENTS_DIR, "assets", "images", raw),
+      ];
+
+  const absolute = candidates.find((candidate) => fs.existsSync(candidate));
+  if (!absolute) {
+    return null;
+  }
+
+  const ext = path.extname(absolute).toLowerCase();
+  const mimeByExt: Record<string, string> = {
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".webp": "image/webp",
+    ".gif": "image/gif",
+  };
+  const mime = mimeByExt[ext];
+  if (!mime) {
+    return null;
+  }
+
+  const imageBin = fs.readFileSync(absolute);
+  return `data:${mime};base64,${imageBin.toString("base64")}`;
+}
+
+function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | null): string {
   const links = (data.links ?? [])
     .map((link) => `${escapeHtml(link.label)}: ${escapeHtml(link.url)}`)
     .join(" / ");
@@ -164,6 +230,11 @@ function renderResumeHtml(data: ResumeData, css: string): string {
     )
     .join("");
 
+  const hasCurrentLine = data.employment_summary.some((item) => item.description.includes("現在に至る"));
+  const currentLineRow = hasCurrentLine
+    ? ""
+    : '<tr><td class="date-cell"></td><td>現在に至る</td></tr>';
+
   const licenseRows = data.licenses
     .map(
       (item) => `<tr><td class="date-cell">${escapeHtml(item.date)}</td><td>${escapeHtml(item.name)}</td></tr>`,
@@ -175,6 +246,7 @@ function renderResumeHtml(data: ResumeData, css: string): string {
     ${educationRows}
     <tr><th class="section-label" colspan="2">職歴</th></tr>
     ${employmentRows}
+    ${currentLineRow}
     <tr><td class="date-cell"></td><td class="end-row">以上</td></tr>
   `;
 
@@ -213,7 +285,15 @@ function renderResumeHtml(data: ResumeData, css: string): string {
           <tr>
             <th>ふりがな</th>
             <td colspan="3">${escapeHtml(furigana)}</td>
-            <td class="photo-cell" rowspan="5">証明写真<br />縦4cm × 横3cm</td>
+            <td class="photo-cell" rowspan="5">
+              <div class="photo-frame">
+                ${
+                  photoDataUri
+                    ? `<img src="${photoDataUri}" alt="証明写真" class="photo-image" />`
+                    : '<div class="photo-placeholder">証明写真<br />縦4cm × 横3cm</div>'
+                }
+              </div>
+            </td>
           </tr>
           <tr>
             <th>氏名</th>
@@ -221,7 +301,7 @@ function renderResumeHtml(data: ResumeData, css: string): string {
           </tr>
           <tr>
             <th>生年月日</th>
-            <td>${escapeHtml(data.personal.birth_date)} (${escapeHtml(ageText)})</td>
+            <td>${escapeHtml(data.personal.birth_date)}<br />(${escapeHtml(ageText)})</td>
             <th>性別</th>
             <td>${escapeHtml(gender)}</td>
           </tr>
@@ -245,6 +325,10 @@ function renderResumeHtml(data: ResumeData, css: string): string {
       <section class="resume-section">
         <h2>学歴・職歴</h2>
         <table class="resume-table history-table">
+          <colgroup>
+            <col class="date-col" />
+            <col />
+          </colgroup>
           <tbody>${educationAndEmploymentRows}</tbody>
         </table>
       </section>
@@ -252,6 +336,10 @@ function renderResumeHtml(data: ResumeData, css: string): string {
       <section class="resume-section">
         <h2>免許・資格</h2>
         <table class="resume-table history-table">
+          <colgroup>
+            <col class="date-col" />
+            <col />
+          </colgroup>
           <tbody>
             ${licenseRows}
             <tr><td class="date-cell"></td><td class="end-row">以上</td></tr>
@@ -259,7 +347,7 @@ function renderResumeHtml(data: ResumeData, css: string): string {
         </table>
       </section>
 
-      <section class="resume-section">
+      <section class="resume-section page-break-before">
         <h2>志望の動機、特技、好きな学科、アピールポイントなど</h2>
         <div class="free-text motivation">${escapeHtml(motivation)}</div>
       </section>
@@ -373,6 +461,7 @@ async function savePdfFromHtml(html: string, outputFile: string): Promise<void> 
   try {
     const page = await browser.newPage();
     await page.setContent(html, { waitUntil: "load" });
+    await page.emulateMediaType("print");
     await page.pdf({
       path: outputFile,
       format: "A4",
@@ -400,12 +489,18 @@ async function convert(profile: string, outputDir: string): Promise<void> {
 
   const resumeCss = loadCss(path.join(TEMPLATES_DIR, "resume", "style.css"));
   const workCss = loadCss(path.join(TEMPLATES_DIR, "work-history", "style.css"));
+  const photoDataUri = resolvePhotoDataUri(profileDir, (resumeData as ResumeData).photo);
+  if ((resumeData as ResumeData).photo && !photoDataUri) {
+    console.warn(
+      `Photo was specified but could not be loaded: ${(resumeData as ResumeData).photo}`,
+    );
+  }
 
   const targetDir = path.join(outputDir, profile);
   fs.mkdirSync(targetDir, { recursive: true });
 
   await savePdfFromHtml(
-    renderResumeHtml(resumeData as ResumeData, resumeCss),
+    renderResumeHtml(resumeData as ResumeData, resumeCss, photoDataUri),
     path.join(targetDir, "resume.pdf"),
   );
 

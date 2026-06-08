@@ -9,17 +9,27 @@
   box-sizing: border-box;
 }
 
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
 body {
   margin: 0;
   color: var(--ink);
   font-family: "Yu Mincho", "Hiragino Mincho ProN", "MS Mincho", serif;
   background: #f6f6f6;
+  display: flex;
+  justify-content: center;
+  padding: 10mm 0;
 }
 
 .sheet {
   background: var(--paper);
   border: 1.5px solid var(--line);
   padding: 10mm 10mm;
+  width: 186mm;
+  min-height: 273mm;
 }
 
 .sheet-header {
@@ -87,9 +97,33 @@ h2 {
   width: 18%;
   text-align: center;
   vertical-align: middle;
-  font-size: 10px;
-  letter-spacing: 0.08em;
+  padding: 3mm 2mm;
   background: #fafafa;
+}
+
+.photo-frame {
+  width: 3cm;
+  height: 4cm;
+  margin: 0 auto;
+  border: 1px solid #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.photo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.photo-placeholder {
+  font-size: 9px;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .name-cell {
@@ -97,8 +131,11 @@ h2 {
   letter-spacing: 0.08em;
 }
 
+.history-table col.date-col {
+  width: 8.2em;
+}
+
 .date-cell {
-  width: 22%;
   text-align: center;
   white-space: nowrap;
 }
@@ -113,7 +150,7 @@ h2 {
 }
 
 .history-table td {
-  min-height: 20px;
+  height: 22px;
 }
 
 .status-table th,
@@ -142,4 +179,30 @@ h2 {
 
 .motivation {
   min-height: 72px;
+}
+
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sheet {
+    width: auto;
+    min-height: auto;
+    border: none;
+  }
+
+  .resume-section,
+  .resume-table {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
+
+  .page-break-before {
+    break-before: page;
+    page-break-before: always;
+  }
 }

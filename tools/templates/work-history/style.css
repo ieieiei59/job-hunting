@@ -10,11 +10,19 @@
   box-sizing: border-box;
 }
 
+@page {
+  size: A4 portrait;
+  margin: 12mm;
+}
+
 body {
   margin: 0;
   color: var(--ink);
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
   background: var(--bg);
+  display: flex;
+  justify-content: center;
+  padding: 10mm 0;
 }
 
 main {
@@ -22,6 +30,8 @@ main {
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 24px;
+  width: 186mm;
+  min-height: 273mm;
 }
 
 header {
@@ -138,4 +148,44 @@ section p {
 
 .project strong {
   color: #6f5a49;
+}
+
+@media print {
+  body {
+    background: #fff;
+    padding: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  main {
+    width: auto;
+    min-height: auto;
+    border-radius: 0;
+    background: #fff;
+    border: none;
+    padding: 10mm 10mm;
+  }
+
+  .eyebrow {
+    color: #555;
+  }
+
+  h2 {
+    color: #333;
+    border-bottom-color: #bbb;
+  }
+
+  .skill-grid article,
+  .experience {
+    border-color: #bbb;
+    background: #fff;
+  }
+
+  .experience,
+  .project,
+  section {
+    break-inside: avoid-page;
+    page-break-inside: avoid;
+  }
 }

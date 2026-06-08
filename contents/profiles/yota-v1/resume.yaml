@@ -9,6 +9,7 @@ personal:
   contact_address: "同上"
   phone: "090-4408-7790"
   email: "yota0509a@gmail.com"
+photo: ../../assets/images/face.png
 motivation: "プロダクト品質と開発生産性を両立できる開発組織づくりに貢献したく、Web バックエンド領域を中心に志望します。"
 jis:
   commute_time: ""
@@ -34,8 +35,6 @@ employment_summary:
     description: 同 一身上の都合により退職
   - date: 2023-01
     description: 株式会社カケハシ 入社
-  - date: 2026-06
-    description: 現在にいたる
 licenses:
   - date: 2021-02
     name: 普通二輪免許
