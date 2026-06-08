@@ -1,0 +1,24 @@
+schema_version: 1
+personal:
+  full_name: "Taro Yamada"
+  birth_date: "1990-01-15"
+  address: "Tokyo, Japan"
+  phone: "+81-90-1234-5678"
+  email: "taro.yamada@example.com"
+links:
+  - label: "GitHub"
+    url: "https://github.com/example"
+education:
+  - date: "2008-04"
+    description: "Entered ABC University, Faculty of Engineering"
+  - date: "2012-03"
+    description: "Graduated from ABC University, Faculty of Engineering"
+employment_summary:
+  - date: "2012-04"
+    description: "Joined Example Systems Inc."
+  - date: "2020-10"
+    description: "Joined Next Career Tech Co."
+licenses:
+  - date: "2011-11"
+    name: "Fundamental Information Technology Engineer"
+preferences: "Open to backend and platform engineering roles in Tokyo."

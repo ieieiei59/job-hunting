@@ -1,0 +1,141 @@
+:root {
+  --bg: radial-gradient(circle at 20% 20%, #eaf7ff 0%, #fff7eb 42%, #ffffff 100%);
+  --surface: #ffffff;
+  --ink: #1c2630;
+  --accent: #b55400;
+  --line: #e3d5c7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background: var(--bg);
+}
+
+main {
+  background: linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+header {
+  margin-bottom: 18px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 2px 0 0;
+  font-size: 27px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 5px;
+}
+
+section + section {
+  margin-top: 14px;
+}
+
+section p {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.skill-grid article {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px;
+  background: #fff;
+}
+
+.skill-grid h3 {
+  margin: 0 0 6px;
+  font-size: 13px;
+}
+
+.tags {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.tags li {
+  padding: 2px 7px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 11px;
+}
+
+.experience-list {
+  display: grid;
+  gap: 10px;
+}
+
+.experience {
+  border-left: 3px solid #e8b27e;
+  background: #fff;
+  padding: 10px 12px;
+}
+
+.experience header {
+  margin: 0 0 8px;
+}
+
+.experience h3 {
+  margin: 0;
+  font-size: 14px;
+}
+
+.experience header p {
+  color: #6f5a49;
+  font-size: 11px;
+}
+
+.project + .project {
+  margin-top: 7px;
+  border-top: 1px dashed var(--line);
+  padding-top: 7px;
+}
+
+.project h4 {
+  margin: 0 0 5px;
+  font-size: 12px;
+}
+
+.project p {
+  margin: 0;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.project strong {
+  color: #6f5a49;
+}

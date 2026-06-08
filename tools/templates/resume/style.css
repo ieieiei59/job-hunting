@@ -1,0 +1,107 @@
+:root {
+  --bg: linear-gradient(135deg, #f5f9ff 0%, #eef8f2 100%);
+  --surface: rgba(255, 255, 255, 0.88);
+  --ink: #132028;
+  --accent: #005d6b;
+  --line: #cee2ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  background: var(--bg);
+}
+
+main {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 22px;
+}
+
+header {
+  margin-bottom: 16px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+}
+
+h1 {
+  margin: 2px 0 0;
+  font-size: 26px;
+}
+
+h2 {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: var(--accent);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 5px;
+}
+
+section + section {
+  margin-top: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 14px;
+}
+
+.grid p {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.grid strong {
+  font-size: 11px;
+  color: #4c5961;
+}
+
+.timeline,
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 8px;
+}
+
+.timeline time {
+  color: #3f5961;
+  font-size: 11px;
+}
+
+.timeline p,
+.links li {
+  margin: 0;
+  font-size: 12px;
+}
+
+.links li {
+  display: flex;
+  gap: 8px;
+}
+
+.links a {
+  color: var(--accent);
+  text-decoration: none;
+}
