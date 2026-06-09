@@ -2,33 +2,79 @@ schema_version: 1
 profile_summary: "Backend engineer with 10+ years of experience in web systems and cloud infrastructure."
 skills:
   Languages:
-    - Python
-    - Go
+    - Python 3系
     - TypeScript
+    - PHP
   Cloud:
     - AWS
-    - GCP
   Databases:
-    - PostgreSQL
     - MySQL
 experiences:
   - period:
-      from: "2020-10"
-      to: "present"
-    company: "Next Career Tech Co."
-    role: "Senior Backend Engineer"
+      from: 2020-04
+      to: 2022-12
+    company: 株式会社アットイン
+    role: エンジニア
     projects:
-      - name: "Recruitment Platform Modernization"
-        domain: "HR Tech"
-        team_size: 8
+      - name: お客様向け WEB アプリケーションの開発・運⽤
+        team_size: 6
         responsibilities:
-          - "Designed and implemented microservice APIs"
-          - "Led migration from monolith to service architecture"
+          - |
+            <概要>
+            お客様向けの、契約・請求等の管理⽤ WEB アプリケーションの開発を⾏った。
+            予約後の契約の同意から退去・精算までの操作を WEBアプリケーション上から⾏うことが可能となった。
+          - |
+            <担当業務>
+            詳細設計、開発、テスト、リリース、運⽤・保守
+          - |
+            企画・基本設計は入社前から⾏われていたため、画⾯デザイン・詳細設計から参加。主に、設計・開発・運⽤を担当。
+            リリース前は、バックエンド API の設計・開発を実施。クリーンアーキテクチャでの開発を⾏い、最低限の保守性を確保することに成功した。
+            また、開発環境は Docker を⽤いて構築したため、要員の追加時の環境構築⼯数の削減にも成功した。
+            リリース時は、AWS の Fargate を⽤いることでこちらも⼯数の削減に成功した。
+            リリース後は、社内基幹システム同様、要望・不具合対応を担当した。 リリース後はフロント側の改善・修正も実施した。
+            フロント側は Angular+TypeScript で構成された CSRのみのアプリケーションになっている。 フロント側のリリースまでの開発は、他社へ外注で対応した。
+            また、テスト・ステージング・本番環境の構築、CI/CD 対応も担当した。 リリース前の自動テスト・ビルドから実際のリリースまで GitHub Actions を⽤いて自動化した。
+          - |          
+            <背景>
+            契約に関わる書類(契約書・請求書 等)や、個人情報などのやり取りを、メール・ファックス・郵送などで⾏っていた。
+            そのため、手続き開始から実際に入居するまでそれなりの⼯数がかかってしまっていた。(基幹システムへの情報入力など)
+            また、物件の種類や担当事務所の違いにより「利⽤可能な鍵の受け渡し方法」「利⽤可能な支払方法」等の差異が存在した。
+            そのため、メールテンプレートが多数存在し、オペレーションが複雑化していた。
+          - |
+            <対応>
+            契約書に対する同意～退去連絡までをすべて実施可能なシステムを構築することとなった。
+            具体的には、「契約同意」「お客様情報入力」「オプション等申し込み」「延長・短縮申し込み」「請求確認」「問い合わせ」「退去連絡」等を実施可能とした。
         tech_stack:
-          - "Python"
-          - "FastAPI"
-          - "PostgreSQL"
-          - "AWS"
+          - PHP 7系
+          - TypeScript
+          - Laravel 6
+          - Angular
+          - Express
+          - OpenAPI
+          - MySQL
+          - AWS Fargate
         achievements:
-          - "Reduced average API latency by 35%"
-          - "Improved deployment frequency from weekly to daily"
+          - 物件による鍵受け渡し方法の差異などをシステムで吸収することで、オペレーションの簡素化に成功した。
+          - 手続き開始から入居まで短時間で終わらせることができるようになった。(即日入居も可)
+      - name: "社内基幹システムの機能改善・保守業務"
+        # domain: "HR Tech"
+        team_size: 3
+        responsibilities:
+          - |
+            <概要>
+            商談・契約・請求・顧客情報等を管理する社内システムの機能開発・不具合修正等を担当した。
+          - |
+            <担当業務>
+            詳細設計、開発、テスト、運⽤・保守
+          - 入社後、大きなプロジェクトにアサインされるまでの 4 ヵ月間はこの業務を中⼼に従事していた。 その間に、手が付けられておらず溜まっていた機能要望や不具合の内、優先度の⾼いものをほぼ全て対応。
+          - それ以降は、別プロジェクトをメインとしつつ、定期的に上がってくる機能要望や不具合の対応をおおよそ月 3 ~ 4 件程度のペースで対応している。
+        tech_stack:
+          - PHP 5系
+          - JavaScript
+          - CakePHP3
+          - jQuery
+          - Vue.js
+          - MySQL
+        # achievements:
+        #   - "Reduced average API latency by 35%"
+        #   - "Improved deployment frequency from weekly to daily"

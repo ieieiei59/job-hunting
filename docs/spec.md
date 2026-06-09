@@ -75,9 +75,11 @@
 - `links`: ポートフォリオやGitHub等
 - `motivation`: 志望動機・アピールポイント
 - `personal.furigana`: ふりがな
+- `personal.address_furigana`: 現住所ふりがな
 - `personal.gender`: 性別
 - `personal.postal_code`: 郵便番号（`NNN-NNNN`）
 - `personal.contact_address`: 連絡先（現住所以外）
+- `personal.contact_postal_code`: 連絡先郵便番号（`NNN-NNNN`）
 - `jis.commute_time`: 通勤時間
 - `jis.dependents`: 扶養家族数（配偶者を除く）
 - `jis.spouse`: 配偶者有無（`有` / `無`）
@@ -114,6 +116,7 @@
 - 実行例（CLI）:
   - `tools/converter` から単一コマンドで生成できること
   - profile 指定と出力先指定を受け取れること
+  - 履歴書のページモードを `--resume-pages one|two` で切り替えられること
 - 実装言語: TypeScript
 - レイアウト方式: HTML/CSS テンプレートを用いてスタイリングし、PDF に変換する
 

@@ -14,10 +14,12 @@ type ResumeData = {
   personal: {
     full_name: string;
     furigana?: string;
+    address_furigana?: string;
     birth_date: string;
     gender?: string;
     postal_code?: string;
     address: string;
+    contact_postal_code?: string;
     contact_address?: string;
     phone: string;
     email: string;
@@ -59,6 +61,7 @@ type WorkHistoryData = {
 type CliArgs = {
   profile: string;
   outputDir: string;
+  resumePages: "one" | "two";
 };
 
 const ROOT_DIR = path.resolve(__dirname, "../../..");
@@ -211,7 +214,12 @@ function resolvePhotoDataUri(profileDir: string, photoPath: string | undefined):
   return `data:${mime};base64,${imageBin.toString("base64")}`;
 }
 
-function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | null): string {
+function renderResumeHtml(
+  data: ResumeData,
+  css: string,
+  photoDataUri: string | null,
+  forceSecondPage: boolean,
+): string {
   const links = (data.links ?? [])
     .map((link) => `${escapeHtml(link.label)}: ${escapeHtml(link.url)}`)
     .join(" / ");
@@ -257,6 +265,10 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
 
   const motivation = data.motivation ?? "";
   const contactAddress = data.personal.contact_address ?? "同上";
+  const addressFurigana = data.personal.address_furigana ?? "";
+  const contactPostalCode = data.personal.contact_postal_code
+    ? `〒${escapeHtml(data.personal.contact_postal_code)} `
+    : "";
   const postalCode = data.personal.postal_code ? `〒${escapeHtml(data.personal.postal_code)} ` : "";
   const spouse = data.jis?.spouse ?? "無";
   const spouseSupport = data.jis?.spouse_support_obligation ?? "無";
@@ -264,6 +276,7 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
   const commute = data.jis?.commute_time ?? "約  時間  分";
   const furigana = data.personal.furigana ?? "";
   const gender = data.personal.gender ?? "";
+  const motivationSectionClass = forceSecondPage ? "resume-section page-break-before" : "resume-section";
 
   return `<!doctype html>
 <html lang="ja">
@@ -285,12 +298,12 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
           <tr>
             <th>ふりがな</th>
             <td colspan="3">${escapeHtml(furigana)}</td>
-            <td class="photo-cell" rowspan="5">
+            <td class="photo-cell" rowspan="6">
               <div class="photo-frame">
                 ${
                   photoDataUri
                     ? `<img src="${photoDataUri}" alt="証明写真" class="photo-image" />`
-                    : '<div class="photo-placeholder">証明写真<br />縦4cm × 横3cm</div>'
+                    : '<div class="photo-placeholder">写真をはる位置<br />1. 縦 36〜40mm 横 24〜30mm<br />2. 本人単身胸から上<br />3. 裏面のりづけ</div>'
                 }
               </div>
             </td>
@@ -302,8 +315,12 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
           <tr>
             <th>生年月日</th>
             <td>${escapeHtml(data.personal.birth_date)}<br />(${escapeHtml(ageText)})</td>
-            <th>性別</th>
+            <th>※性別</th>
             <td>${escapeHtml(gender)}</td>
+          </tr>
+          <tr>
+            <th>現住所ふりがな</th>
+            <td colspan="3">${escapeHtml(addressFurigana)}</td>
           </tr>
           <tr>
             <th>現住所</th>
@@ -311,7 +328,7 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
           </tr>
           <tr>
             <th>連絡先</th>
-            <td colspan="3">${escapeHtml(contactAddress)}</td>
+            <td colspan="3">${contactPostalCode}${escapeHtml(contactAddress)}</td>
           </tr>
           <tr>
             <th>電話</th>
@@ -334,7 +351,7 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
       </section>
 
       <section class="resume-section">
-        <h2>免許・資格</h2>
+        <h2>資格・免許</h2>
         <table class="resume-table history-table">
           <colgroup>
             <col class="date-col" />
@@ -347,7 +364,7 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
         </table>
       </section>
 
-      <section class="resume-section page-break-before">
+      <section class="${motivationSectionClass}">
         <h2>志望の動機、特技、好きな学科、アピールポイントなど</h2>
         <div class="free-text motivation">${escapeHtml(motivation)}</div>
       </section>
@@ -370,7 +387,7 @@ function renderResumeHtml(data: ResumeData, css: string, photoDataUri: string | 
       </section>
 
       <section class="resume-section">
-        <h2>本人希望記入欄</h2>
+        <h2>本人希望記入欄（特に給料・職種・勤務時間・勤務地・その他について希望があれば記入）</h2>
         <div class="free-text">${escapeHtml(data.preferences)}</div>
       </section>
 
@@ -398,8 +415,13 @@ function renderWorkHistoryHtml(data: WorkHistoryData, css: string): string {
           const rows: string[] = [];
           if (project.domain) rows.push(`<p><strong>領域</strong><span>${escapeHtml(project.domain)}</span></p>`);
           if (project.team_size) rows.push(`<p><strong>体制</strong><span>${project.team_size}名</span></p>`);
-          if (project.responsibilities) {
-            rows.push(`<p><strong>担当</strong><span>${escapeHtml(project.responsibilities.join(" / "))}</span></p>`);
+          if (project.responsibilities?.length) {
+            const responsibilityItems = project.responsibilities
+              .map((item) => `<div>${escapeHtml(item)}</div>`)
+              .join("");
+            rows.push(
+              `<div class="project-row responsibilities-row"><strong>担当</strong><div class="multiline-items">${responsibilityItems}</div></div>`,
+            );
           }
           if (project.tech_stack) {
             rows.push(`<p><strong>技術</strong><span>${escapeHtml(project.tech_stack.join(", "))}</span></p>`);
@@ -473,7 +495,11 @@ async function savePdfFromHtml(html: string, outputFile: string): Promise<void> 
   }
 }
 
-async function convert(profile: string, outputDir: string): Promise<void> {
+async function convert(
+  profile: string,
+  outputDir: string,
+  options: { forceSecondPage: boolean },
+): Promise<void> {
   const profileDir = path.join(CONTENTS_DIR, "profiles", profile);
   const resumeYaml = path.join(profileDir, "resume.yaml");
   const workYaml = path.join(profileDir, "work-history.yaml");
@@ -500,7 +526,7 @@ async function convert(profile: string, outputDir: string): Promise<void> {
   fs.mkdirSync(targetDir, { recursive: true });
 
   await savePdfFromHtml(
-    renderResumeHtml(resumeData as ResumeData, resumeCss, photoDataUri),
+    renderResumeHtml(resumeData as ResumeData, resumeCss, photoDataUri, options.forceSecondPage),
     path.join(targetDir, "resume.pdf"),
   );
 
@@ -522,16 +548,23 @@ async function main(): Promise<number> {
       default: path.join(ROOT_DIR, "tools", "output"),
       describe: "Output directory for generated PDFs",
     })
+    .option("resume-pages", {
+      type: "string",
+      choices: ["one", "two"] as const,
+      default: "one",
+      describe: "Resume page mode: one=prefer one-page, two=force second-page split before motivation",
+    })
     .strict()
     .parseAsync();
 
   const args: CliArgs = {
     profile: argv.profile,
     outputDir: path.resolve(argv["output-dir"]),
+    resumePages: argv["resume-pages"] === "two" ? "two" : "one",
   };
 
   try {
-    await convert(args.profile, args.outputDir);
+    await convert(args.profile, args.outputDir, { forceSecondPage: args.resumePages === "two" });
     console.log(`Generated PDFs for profile '${args.profile}'`);
     return 0;
   } catch (error) {

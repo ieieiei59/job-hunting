@@ -20,6 +20,16 @@ npm run build
 npm run generate -- --profile default
 ```
 
+履歴書のページモードを指定する場合:
+
+```bash
+npm run generate -- --profile default --resume-pages one
+```
+
+`--resume-pages`:
+- `one` (default): 1ページ様式に寄せる（志望動機前で固定改ページしない）
+- `two`: 志望動機の前で改ページして2ページ構成にする
+
 `tools/output/default/` に以下を生成します。
 - `resume.pdf`
 - `work-history.pdf`
@@ -45,3 +55,11 @@ photo: "../../assets/images/profile.jpg"
 4. `contents/assets/images/` からの相対
 
 対応形式: `jpg`, `jpeg`, `png`, `webp`, `gif`
+
+## JIS向け追加項目（resume.yaml）
+
+```yaml
+personal:
+	address_furigana: "あいちけん いわくらし ..."
+	contact_postal_code: "482-0042"
+```

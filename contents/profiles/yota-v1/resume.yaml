@@ -2,10 +2,12 @@ schema_version: 1
 personal:
   full_name: "宮田 洋太"
   furigana: "みやた ようた"
+  address_furigana: "あいちけん いわくらし なかほんまち ふるいちば"
   birth_date: "1997-05-09"
   gender: "男"
   postal_code: "482-0042"
   address: "愛知県 岩倉市 中本町 古市場 48-2 グランドテラスA"
+  contact_postal_code: "482-0042"
   contact_address: "同上"
   phone: "090-4408-7790"
   email: "yota0509a@gmail.com"

@@ -1,9 +1,10 @@
 :root {
-  --bg: radial-gradient(circle at 20% 20%, #eaf7ff 0%, #fff7eb 42%, #ffffff 100%);
+  --bg: linear-gradient(160deg, #eef4fb 0%, #f8fbff 42%, #ffffff 100%);
   --surface: #ffffff;
-  --ink: #1c2630;
-  --accent: #b55400;
-  --line: #e3d5c7;
+  --ink: #1a2635;
+  --accent: #1f4f87;
+  --line: #d4dfeb;
+  --muted: #4e5f73;
 }
 
 * {
@@ -22,14 +23,15 @@ body {
   background: var(--bg);
   display: flex;
   justify-content: center;
-  padding: 10mm 0;
+  padding: 7mm 0;
 }
 
 main {
-  background: linear-gradient(180deg, #ffffff 0%, #fffdf8 100%);
+  background: var(--surface);
   border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 24px;
+  border-radius: 6px;
+  box-shadow: 0 10px 24px rgba(25, 47, 73, 0.08);
+  padding: 22px 24px;
   width: 186mm;
   min-height: 273mm;
 }
@@ -41,20 +43,23 @@ header {
 .eyebrow {
   margin: 0;
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.14em;
   color: var(--accent);
+  font-weight: 600;
 }
 
 h1 {
   margin: 2px 0 0;
-  font-size: 27px;
+  font-size: 28px;
+  letter-spacing: 0.02em;
 }
 
 h2 {
-  margin: 0 0 8px;
-  font-size: 16px;
+  margin: 0 0 9px;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--accent);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid #b8c9de;
   padding-bottom: 5px;
 }
 
@@ -65,7 +70,7 @@ section + section {
 section p {
   margin: 0;
   font-size: 12px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .skill-grid {
@@ -76,14 +81,15 @@ section p {
 
 .skill-grid article {
   border: 1px solid var(--line);
-  border-radius: 10px;
-  padding: 10px;
+  border-radius: 4px;
+  padding: 10px 11px;
   background: #fff;
 }
 
 .skill-grid h3 {
   margin: 0 0 6px;
   font-size: 13px;
+  color: #1d3552;
 }
 
 .tags {
@@ -97,9 +103,10 @@ section p {
 
 .tags li {
   padding: 2px 7px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
+  border-radius: 3px;
+  border: 1px solid #cdd9e8;
   font-size: 11px;
+  background: #f2f7fd;
 }
 
 .experience-list {
@@ -108,9 +115,9 @@ section p {
 }
 
 .experience {
-  border-left: 3px solid #e8b27e;
+  border-left: 4px solid #5b84b6;
   background: #fff;
-  padding: 10px 12px;
+  padding: 10px 12px 11px;
 }
 
 .experience header {
@@ -123,13 +130,13 @@ section p {
 }
 
 .experience header p {
-  color: #6f5a49;
+  color: var(--muted);
   font-size: 11px;
 }
 
 .project + .project {
   margin-top: 7px;
-  border-top: 1px dashed var(--line);
+  border-top: 1px solid #d7e2ef;
   padding-top: 7px;
 }
 
@@ -138,16 +145,30 @@ section p {
   font-size: 12px;
 }
 
-.project p {
+.project p,
+.project .project-row {
   margin: 0;
   display: grid;
-  grid-template-columns: 44px 1fr;
+  grid-template-columns: 48px 1fr;
   gap: 8px;
   font-size: 11px;
 }
 
 .project strong {
-  color: #6f5a49;
+  color: #3d5876;
+}
+
+.project .multiline-items {
+  line-height: 1.5;
+}
+
+.project .multiline-items > div {
+  white-space: pre-wrap;
+}
+
+.project .multiline-items > div + div {
+  margin-top: 0.75em;
+  margin-top: 0.5lh;
 }
 
 @media print {
@@ -164,16 +185,17 @@ section p {
     border-radius: 0;
     background: #fff;
     border: none;
+    box-shadow: none;
     padding: 10mm 10mm;
   }
 
   .eyebrow {
-    color: #555;
+    color: #2f4660;
   }
 
   h2 {
     color: #333;
-    border-bottom-color: #bbb;
+    border-bottom-color: #9fb0c5;
   }
 
   .skill-grid article,
